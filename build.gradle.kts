@@ -90,8 +90,11 @@ fun Jar.configArchetypeSourceJar() {
     val sourceDir = "archetype-resources"
     val kotlinSourceDir = "$sourceDir/src/main/kotlin"
     val javaSourceDir = "$sourceDir/src/main/java"
+    val resourcesDir = "$sourceDir/src/main/resources"
+    
     val kotlinTestSourceDir = "$sourceDir/src/test/kotlin"
     val javaTestSourceDir = "$sourceDir/src/test/java"
+    val testResourcesDir = "$sourceDir/src/test/resources"
     
     val metaInfMaven = "META-INF/maven"
     
@@ -101,11 +104,17 @@ fun Jar.configArchetypeSourceJar() {
     from(main.java) {
         into(javaSourceDir)
     }
+    from(main.resources) {
+        into(resourcesDir)
+    }
     from(test.kotlin) {
         into(kotlinTestSourceDir)
     }
     from(test.java) {
         into(javaTestSourceDir)
+    }
+    from(test.resources) {
+        into(testResourcesDir)
     }
     from(main.resources)
     
@@ -212,6 +221,16 @@ publishing {
                     // <testSourceDirectory>src/test/kotlin</testSourceDirectory>
                     build.append("sourceDirectory") { textContent = "src/main/kotlin" }
                     build.append("testSourceDirectory") { textContent = "src/test/kotlin" }
+                    build.append("resources") {
+                        append("resource") {
+                            append("directory"){ textContent = "src/main/resources" }
+                        }
+                    }
+                    build.append("testResources") {
+                        append("testResource") {
+                            append("directory"){ textContent = "src/test/resources" }
+                        }
+                    }
                     
                     val plugins = build.append("plugins")
     

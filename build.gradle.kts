@@ -1,6 +1,5 @@
 plugins {
-    // `java-library`
-    // `simbot-archetypes-archetype-maven-publish`
+    `simbot-archetypes-nexus-publish`
 }
 
 group = "love.forte.simbot.archetypes"

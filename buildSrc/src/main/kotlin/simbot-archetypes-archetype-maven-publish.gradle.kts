@@ -235,7 +235,7 @@ if (keyId != null) {
         
         useInMemoryPgpKeys(keyId, secretKey, password)
         
-        sign(publishing.publications)
+        sign(publishing.publications["archetype"])
     }
 } else {
     logger.warn("Signing property [keyId] (from system env [GPG_KEY_ID]) is null.")

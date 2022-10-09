@@ -222,11 +222,12 @@ publishing {
     }
 }
 
-val keyId = System.getenv("GPG_KEY_ID")
-val secretKey = System.getenv("GPG_SECRET_KEY")
-val password = System.getenv("GPG_PASSWORD")
+val keyId = systemProp("GPG_KEY_ID")
+val secretKey = systemProp("GPG_SECRET_KEY")
+val password = systemProp("GPG_PASSWORD")
 
 if (keyId != null) {
+    logger.info("Signing property [keyId] is {}", keyId)
     signing {
         setRequired {
             !project.version.toString().endsWith("SNAPSHOT")

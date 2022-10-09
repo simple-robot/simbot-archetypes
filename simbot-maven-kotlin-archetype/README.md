@@ -15,7 +15,7 @@
 ```shell
 mvn archetype:generate                                  \
   -DarchetypeGroupId="love.forte.simbot.archetypes"     \
-  -DarchetypeArtifactId="simbot-archetype-maven-kotlin" \
+  -DarchetypeArtifactId="simbot-maven-kotlin-archetype" \
   -DarchetypeVersion="0.0.1"                            \
   -DgroupId=<my.groupid>                                \
   -DartifactId=<my-artifactId>
@@ -24,7 +24,7 @@ mvn archetype:generate                                  \
 替换上述属性 `<my.groupId>`、`<my-artifactId>` 属性为你新建项目的所需属性，或忽略这几个参数，例如：
 
 ```shell
-mvn archetype:generate -DarchetypeGroupId="love.forte.simbot.archetypes" -DarchetypeArtifactId="simbot-archetype-maven-kotlin" -DarchetypeVersion="0.0.1"
+mvn archetype:generate -DarchetypeGroupId="love.forte.simbot.archetypes" -DarchetypeArtifactId="simbot-maven-kotlin-archetype" -DarchetypeVersion="0.0.1"
 ```
 
 
@@ -46,7 +46,7 @@ mvn archetype:generate -DarchetypeGroupId="love.forte.simbot.archetypes" -Darche
 其中：
 
 - **组 ID**: `love.forte.simbot.archetypes`
-- **组 ID**: `simbot-archetype-maven-kotlin`
+- **组 ID**: `simbot-maven-kotlin-archetype`
 - **版本**: `0.0.1`
 
 完成后点击 **添加**。

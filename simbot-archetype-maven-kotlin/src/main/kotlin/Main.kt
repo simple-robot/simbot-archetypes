@@ -4,7 +4,7 @@ import love.forte.simbot.ID
 import love.forte.simbot.application.Application
 import love.forte.simbot.core.application.createSimpleApplication
 import love.forte.simbot.core.application.listeners
-import love.forte.simbot.core.event.EventListenerRegistrationDescriptionsGenerator
+import love.forte.simbot.core.event.EventListenersGenerator
 import love.forte.simbot.event.FriendMessageEvent
 import love.forte.simbot.installAll
 
@@ -56,7 +56,7 @@ suspend fun main() {
 /**
  * 收到好友的‘你好’，回复一句‘你也好’
  */
-private fun EventListenerRegistrationDescriptionsGenerator.friendHello() {
+private fun EventListenersGenerator.friendHello() {
     // 监听事件类型 'FriendMessageEvent' (好友消息事件)
     FriendMessageEvent { event ->
         // 回复‘你也好’

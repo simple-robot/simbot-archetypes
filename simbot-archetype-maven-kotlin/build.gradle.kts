@@ -10,7 +10,7 @@ version = "0.0.1"
 
 dependencies {
     testApi(kotlin("test"))
-    api("love.forte.simbot:simbot-core:3.0.0-beta.3")
+    api("love.forte.simbot:simbot-core:3.0.0-beta.2")
     //api("love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-beta-M3")
 }
 

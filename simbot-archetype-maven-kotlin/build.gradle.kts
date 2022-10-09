@@ -22,13 +22,14 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+val archetypeId = "simple-robot-archetype-kotlin"
+
 archetypeMetadata {
-    name.set("simple-robot-archetype-kotlin")
+    name.set(archetypeId)
     fileSets.add(FileSet(directory = "src/main/kotlin"))
     fileSets.add(FileSet(directory = "src/test/kotlin"))
-    
 }
 
 archetype {
-    id.set("simple-robot-archetype-kotlin")
+    id.set(archetypeId)
 }

@@ -222,6 +222,24 @@ publishing {
     }
 }
 
+val keyId = System.getenv("GPG_KEY_ID")
+val secretKey = System.getenv("GPG_SECRET_KEY")
+val password = System.getenv("GPG_PASSWORD")
+
+if (keyId != null) {
+    signing {
+        setRequired {
+            !project.version.toString().endsWith("SNAPSHOT")
+        }
+        
+        useInMemoryPgpKeys(keyId, secretKey, password)
+        
+        sign(publishing.publications)
+    }
+} else {
+    logger.warn("Signing property [keyId] (from system env [GPG_KEY_ID]) is null.")
+}
+
 fun RepositoryHandler.configPublishMaven(sonatype: Sonatype, username: String?, password: String?) {
     maven {
         name = sonatype.name

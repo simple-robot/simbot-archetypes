@@ -1,3 +1,5 @@
+//!!ARCHETYPE_REPLACE package ${groupId}
+
 import love.forte.simbot.ID
 import love.forte.simbot.application.Application
 import love.forte.simbot.core.application.createSimpleApplication
@@ -6,6 +8,9 @@ import love.forte.simbot.core.event.EventListenerRegistrationDescriptionsGenerat
 import love.forte.simbot.event.FriendMessageEvent
 import love.forte.simbot.installAll
 
+/**
+ * 当前程序入口
+ */
 suspend fun main() {
     val application = createSimpleApplication {
         listeners {

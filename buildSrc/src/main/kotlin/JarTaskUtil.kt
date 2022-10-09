@@ -1,12 +1,15 @@
 import org.gradle.api.Task
 import org.gradle.api.publish.maven.tasks.GenerateMavenPom
-import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.named
 
-fun Jar.configMavenArchetypeSourceJar(sourceSets: SourceSetContainer, generateMavenPomTask: GenerateMavenPom, createArchetypeMetadataFileTask: Task, createArchetypeFileTask: Task) {
+fun Jar.configMavenArchetypeSourceJar(
+    generateMavenPomTask: GenerateMavenPom,
+    createArchetypeMetadataFileTask: Task,
+    createArchetypeFileTask: Task,
+) {
     // val generateMavenPomTask = tasks.withType(GenerateMavenPom::class).firstOrNull() ?: return
     dependsOn(generateMavenPomTask)
     dependsOn(createArchetypeMetadataFileTask)
@@ -45,9 +48,21 @@ fun Jar.configMavenArchetypeSourceJar(sourceSets: SourceSetContainer, generateMa
     }
     from(main.resources)
     
+    filter { it.removePrefix("//!!ARCHETYPE_REPLACE ") }
+    filter { if (it.contains("//!!ARCHETYPE_REMOVE")) "" else it }
+    
     from(generateMavenPomTask.destination) {
         into(sourceDir)
         rename { "pom.xml" }
+        filter {
+            val lineTrim = it.trim()
+            when {
+                lineTrim == "<groupId>${P.GROUP}</groupId>" -> "  <groupId>\${groupId}</groupId>"
+                lineTrim == "<artifactId>${project.name}</artifactId>" -> "  <artifactId>\${artifactId}</artifactId>"
+                lineTrim == "<version>${P.VERSION}</version>" -> "  <version>\${version}</version>"
+                else -> it
+            }
+        }
     }
     
     from(createArchetypeMetadataFileTask.outputs) {

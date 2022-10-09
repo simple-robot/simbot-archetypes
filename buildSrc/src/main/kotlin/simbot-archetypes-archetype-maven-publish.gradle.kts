@@ -37,17 +37,6 @@ val archetype = extensions.create<ArchetypeExtension>("archetype")
 val createArchetypeFileTask = tasks.create("createArchetypeFile") {
     val outputFile = project.buildDir.resolve("archetypes/archetype.xml")
     
-    // val archetypeFileText = """
-    //     <archetype>
-    //       <id>simple-robot-archetype-kotlin</id>
-    //       <sources>
-    //         <source>src/main/kotlin/Hello.kt</source>
-    //       </sources>
-    //       <testSources>
-    //       </testSources>
-    //     </archetype>
-    // """.trimIndent()
-    
     doFirst {
         if (outputFile.exists()) {
             outputFile.delete()
@@ -61,7 +50,6 @@ val createArchetypeFileTask = tasks.create("createArchetypeFile") {
                 sources.add("src/main/kotlin/$relativePath")
             }
         }
-        sources.forEach { println(it) }
     
         val archetypeFileText = archetypeFileText(Archetype(archetype.id.get(), sources = sources, testSources = emptyList()))
         
@@ -70,19 +58,20 @@ val createArchetypeFileTask = tasks.create("createArchetypeFile") {
     outputs.files(outputFile)
 }
 
+val archetypePomName = "archetypePom"
+val archetypePomGenerateTaskName = "generatePomFileFor${"${archetypePomName.first().toUpperCase()}${archetypePomName.substring(1)}"}Publication"
+
 val archetypeSourceJar = tasks.register<Jar>("archetypeSourceJar") {
     archiveClassifier.set("sources")
     configMavenArchetypeSourceJar(
-        sourceSets,
-        tasks.withType(GenerateMavenPom::class).firstOrNull() ?: return@register,
+        tasks.named(archetypePomGenerateTaskName, GenerateMavenPom::class).get(),
         createArchetypeMetadataFileTask,
         createArchetypeFileTask
     )
 }
 val archetypeJar = tasks.register<Jar>("archetypeJar") {
     configMavenArchetypeSourceJar(
-        sourceSets,
-        tasks.withType(GenerateMavenPom::class).firstOrNull() ?: return@register,
+        tasks.named(archetypePomGenerateTaskName, GenerateMavenPom::class).get(),
         createArchetypeMetadataFileTask,
         createArchetypeFileTask
     )
@@ -114,11 +103,17 @@ abstract class ArchetypeMavenPomExtension {
     
 }
 
+val sonatypeUsername: String? = systemProp("OSSRH_USER")
+val sonatypePassword: String? = systemProp("OSSRH_PASSWORD")
+
 publishing {
     publications {
-        create<MavenPublication>("archetypeMavenPublication") {
+        create<MavenPublication>(archetypePomName) {
             from(components["java"])
             setArtifacts(listOf(archetypeJar, archetypeSourceJar, jarJavadoc))
+            groupId = P.GROUP
+            artifactId = project.name
+            version = P.VERSION
             pom {
                 properties.apply {
                     this["project.build.sourceEncoding"] = "UTF-8"
@@ -180,16 +175,74 @@ publishing {
                     appendPluginElement("org.codehaus.mojo", "exec-maven-plugin", "1.6.0") {
                         append("configuration") {
                             appendChild(document.createComment("你的main函数所在类"))
-                            append("mainClass") { textContent = "MainKt" }
+                            append("mainClass") { textContent = "\${groupId}.MainKt" }
                         }
                     }
                 }
             }
         }
+        
+        create<MavenPublication>("archetype") {
+            from(components["java"])
+            setArtifacts(listOf(archetypeJar, archetypeSourceJar, jarJavadoc))
+            groupId = project.group.toString()
+            artifactId = project.name
+            version = project.version.toString()
+            pom {
+                name.set(project.name)
+                description.set(project.description ?: P.DESCRIPTION)
+                url.set("https://github.com/simple-robot/simbot-archetypes")
+                licenses {
+                    license {
+                        name.set("GNU GENERAL PUBLIC LICENSE, Version 3")
+                        url.set("https://www.gnu.org/licenses/gpl-3.0-standalone.html")
+                    }
+                    license {
+                        name.set("GNU LESSER GENERAL PUBLIC LICENSE, Version 3")
+                        url.set("https://www.gnu.org/licenses/lgpl-3.0-standalone.html")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/simple-robot/simbot-archetypes")
+                    connection.set("scm:git:https://github.com/simple-robot/simbot-archetypes.git")
+                    developerConnection.set("scm:git@github.com:simple-robot/simbot-archetypes.git")
+                }
+                setupDevelopers()
+    
+            }
+        }
+        repositories {
+            mavenLocal()
+            if (project.version.toString().contains("SNAPSHOT", true)) {
+                configPublishMaven(Sonatype.Snapshot, sonatypeUsername, sonatypePassword)
+            } else {
+                configPublishMaven(Sonatype.Central, sonatypeUsername, sonatypePassword)
+            }
+        }
     }
 }
 
+fun RepositoryHandler.configPublishMaven(sonatype: Sonatype, username: String?, password: String?) {
+    maven {
+        name = sonatype.name
+        url = uri(sonatype.url)
+        credentials {
+            this.username = username
+            this.password = password
+        }
+    }
+}
 
+fun MavenPom.setupDevelopers() {
+    developers {
+        developer {
+            id.set("forte")
+            name.set("ForteScarlet")
+            email.set("ForteScarlet@163.com")
+            url.set("https://github.com/ForteScarlet")
+        }
+    }
+}
 
 operator fun MapProperty<String, String>.set(key: String, value: String) {
     put(key, value)

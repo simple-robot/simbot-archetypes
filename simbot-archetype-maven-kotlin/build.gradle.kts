@@ -22,7 +22,7 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-val archetypeId = "simple-robot-archetype-kotlin"
+val archetypeId = project.name
 
 archetypeMetadata {
     name.set(archetypeId)

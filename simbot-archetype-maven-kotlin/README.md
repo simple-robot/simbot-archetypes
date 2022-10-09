@@ -1,0 +1,61 @@
+# Maven Kotlin
+
+构建Maven环境下Kotlin项目的archetype。
+
+## 使用
+
+首先确保当前系统环境中存在 [Maven](https://maven.apache.org/) 环境。
+
+### Ⅰ. 使用命令行
+
+**1. 创建项目**
+
+选择一个你想要创建项目的目录，并在当前目录中执行下述 `mvn` 命令：
+
+```shell
+mvn archetype:generate                                  \
+  -DarchetypeGroupId="love.forte.simbot.archetypes"     \
+  -DarchetypeArtifactId="simbot-archetype-maven-kotlin" \
+  -DarchetypeVersion="0.0.1"                            \
+  -DgroupId=<my.groupid>                                \
+  -DartifactId=<my-artifactId>
+```
+
+替换上述属性 `<my.groupId>`、`<my-artifactId>` 属性为你新建项目的所需属性，或忽略这几个参数，例如：
+
+```shell
+mvn archetype:generate -DarchetypeGroupId="love.forte.simbot.archetypes" -DarchetypeArtifactId="simbot-archetype-maven-kotlin" -DarchetypeVersion="0.0.1"
+```
+
+
+
+### Ⅱ. 使用IntelliJ IDEA可视化构建
+
+**1. 新建项目**
+
+新建项目，选择 `Maven Archetype` 生成器，如下图所示
+
+![create-project.png](../.simbot/readmeAssets/maven-kotlin/create-project.png)
+
+**2. 设置Archetype**
+
+点击 **`Archetype`** 后的 **添加...** 来添加 Archetype信息：
+
+![add-archetype.png](../.simbot/readmeAssets/maven-kotlin/add-archetype.png)
+
+其中：
+
+- **组 ID**: `love.forte.simbot.archetypes`
+- **组 ID**: `simbot-archetype-maven-kotlin`
+- **版本**: `0.0.1`
+
+完成后点击 **添加**。
+
+
+**3. 完善信息**
+
+完善新建项目面板中的其他可选配置（例如**项目名称**、**项目位置**等）
+
+**4. 创建项目**
+
+创建项目，并等待项目初始化完毕。

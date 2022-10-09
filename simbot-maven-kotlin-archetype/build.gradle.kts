@@ -5,8 +5,6 @@ plugins {
     `simbot-archetypes-archetype-maven-publish`
 }
 
-group = "love.forte.simbot.archetypes"
-version = "0.0.1"
 
 dependencies {
     testApi(kotlin("test"))

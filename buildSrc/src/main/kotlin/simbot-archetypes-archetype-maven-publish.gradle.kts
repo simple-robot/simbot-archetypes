@@ -229,13 +229,13 @@ val password = systemProp("GPG_PASSWORD")
 if (keyId != null) {
     logger.info("Signing property [keyId] is {}", keyId)
     signing {
-        setRequired {
-            !project.version.toString().endsWith("SNAPSHOT")
-        }
+        // setRequired {
+        //     !project.version.toString().endsWith("SNAPSHOT")
+        // }
         
         useInMemoryPgpKeys(keyId, secretKey, password)
         
-        sign(publishing.publications["archetype"])
+        sign(publishing.publications)
     }
 } else {
     logger.warn("Signing property [keyId] (from system env [GPG_KEY_ID]) is null.")

@@ -17,7 +17,6 @@
 import org.gradle.api.Project
 import java.net.URI
 
-@Suppress("ClassName")
 sealed class Sonatype {
     abstract val name: String
     abstract val url: String

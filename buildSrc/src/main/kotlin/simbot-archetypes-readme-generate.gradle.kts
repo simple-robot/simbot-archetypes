@@ -21,14 +21,9 @@ val readmeVersionUpdateTask = tasks.create("readmeVersionGenerate") {
 
         val readme = project.file(readmeGenerate.readmeFile.getOrElse("README.md"))
            .takeIf { it.exists() && it.isFile && it.canWrite() && it.canRead() } ?: return@doFirst
-
-
-        val version = readmeGenerate.version.getOrElse(project.version.toString())
         
         val deleteMark = deleteMark(false)
 
-        val versionMatcher = Regex("") // readmeVersionGenerate.versionMatcher.getOrElse(Regex.escapeReplacement())
-    
         readme.writeText(readmeTmp.useLines { lines ->
             lines.map {
                 it.processMarks(deleteMark)

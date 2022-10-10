@@ -12,19 +12,9 @@ interface ArchetypeMetadataExtension {
 
 val archetypeMetadata = extensions.create<ArchetypeMetadataExtension>("archetypeMetadata")
 
-val createArchetypeMetadataFileTask = tasks.create("createArchetypeMetadataFile") {
-    val outputFile = project.buildDir.resolve("archetypes/archetype-metadata.xml")
-    
-    doFirst {
-        val archetypeFileText = archetypeMetadataFileText(
-            ArchetypeMetadata(archetypeMetadata.name.getOrElse(project.name), archetypeMetadata.fileSets.getOrElse(emptyList()))
-        )
-        if (outputFile.exists()) {
-            outputFile.delete()
-        }
-        outputFile.appendText(archetypeFileText)
-    }
-    outputs.files(outputFile)
+
+val createArchetypeMetadataFileTask = createArchetypeMetadataFileTask {
+    ArchetypeMetadata(archetypeMetadata.name.getOrElse(project.name), archetypeMetadata.fileSets.getOrElse(emptyList()))
 }
 
 interface ArchetypeExtension {
@@ -33,58 +23,34 @@ interface ArchetypeExtension {
 
 val archetype = extensions.create<ArchetypeExtension>("archetype")
 
-
-val createArchetypeFileTask = tasks.create("createArchetypeFile") {
-    val outputFile = project.buildDir.resolve("archetypes/archetype.xml")
+val createArchetypeFileTask = createArchetypeFileTask {
+    val sources = mutableListOf<String>()
     
-    doFirst {
-        if (outputFile.exists()) {
-            outputFile.delete()
+    sourceSets.main.get().kotlin.sourceDirectories.asFileTree.matching {
+        include("**/*.kt")
+    }.visit {
+        if (!isDirectory) {
+            sources.add("src/main/kotlin/$relativePath")
         }
-        val sources = mutableListOf<String>()
-    
-        sourceSets.main.get().kotlin.sourceDirectories.asFileTree.matching {
-            include("**/*.kt")
-        }.visit {
-            if (!isDirectory) {
-                sources.add("src/main/kotlin/$relativePath")
-            }
-        }
-    
-        val archetypeFileText = archetypeFileText(Archetype(archetype.id.getOrElse(project.name), sources = sources, testSources = emptyList()))
-        
-        outputFile.appendText(archetypeFileText)
     }
-    outputs.files(outputFile)
+    
+    Archetype(archetype.id.getOrElse(project.name), sources = sources, testSources = emptyList())
 }
+
+
 
 val archetypePomName = "archetypePom"
 val archetypePomGenerateTaskName = "generatePomFileFor${"${archetypePomName.first().toUpperCase()}${archetypePomName.substring(1)}"}Publication"
 
-val archetypeSourceJar = tasks.register<Jar>("archetypeSourceJar") {
-    archiveClassifier.set("sources")
-    configMavenArchetypeSourceJar(
-        tasks.named(archetypePomGenerateTaskName, GenerateMavenPom::class).get(),
-        createArchetypeMetadataFileTask,
-        createArchetypeFileTask
-    )
-}
-val archetypeJar = tasks.register<Jar>("archetypeJar") {
-    configMavenArchetypeSourceJar(
-        tasks.named(archetypePomGenerateTaskName, GenerateMavenPom::class).get(),
-        createArchetypeMetadataFileTask,
-        createArchetypeFileTask
-    )
-}
+val archetypeSourceJar = createArchetypeSourceJarTask("archetypeSourceJar", "source", archetypePomGenerateTaskName, createArchetypeMetadataFileTask, createArchetypeFileTask)
+val archetypeJar = createArchetypeSourceJarTask("archetypeJar", null, archetypePomGenerateTaskName, createArchetypeMetadataFileTask, createArchetypeFileTask)
+
 
 tasks.jar {
     enabled = false
 }
 
-
-val jarJavadoc by tasks.registering(Jar::class) {
-    archiveClassifier.set("javadoc")
-}
+val jarJavadoc by emptyJavadocJar
 
 abstract class ArchetypeMavenPomExtension {
     abstract val projectBuildSourceEncoding: Property<String>

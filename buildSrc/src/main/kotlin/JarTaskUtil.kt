@@ -1,9 +1,16 @@
+import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.publish.maven.tasks.GenerateMavenPom
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
-import org.gradle.api.tasks.bundling.Jar
+import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.named
+import org.gradle.kotlin.dsl.registering
+
+val Project.emptyJavadocJar
+    get() = tasks.registering(Jar::class) {
+        archiveClassifier.set("javadoc")
+    }
 
 fun Jar.configMavenArchetypeSourceJar(
     generateMavenPomTask: GenerateMavenPom,
@@ -79,6 +86,6 @@ fun Jar.configMavenArchetypeSourceJar(
  * Provides the existing [jar][org.gradle.api.tasks.bundling.Jar] task.
  */
 internal val TaskContainer.`jar`: TaskProvider<Jar>
-    get() = named<org.gradle.api.tasks.bundling.Jar>("jar")
+    get() = named<Jar>("jar")
 
 

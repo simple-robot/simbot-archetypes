@@ -48,8 +48,9 @@ fun Jar.configMavenArchetypeSourceJar(
     }
     from(main.resources)
     
-    filter { it.removePrefix("//!!ARCHETYPE_REPLACE ") }
-    filter { if (it.contains("//!!ARCHETYPE_REMOVE")) "" else it }
+    val deleteMark = deleteMark(false)
+    
+    filter { it.processMarks(deleteMark) }
     
     from(generateMavenPomTask.destination) {
         into(sourceDir)

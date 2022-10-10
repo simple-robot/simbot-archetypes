@@ -1,4 +1,4 @@
-//!!ARCHETYPE_REPLACE package ${groupId}
+//!!REPLACE package ${groupId}
 
 import love.forte.simbot.ID
 import love.forte.simbot.application.Application

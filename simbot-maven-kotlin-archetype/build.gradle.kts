@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `java-library`
     `simbot-archetypes-archetype-maven-publish`
+    `simbot-archetypes-readme-generate`
 }
 
 
@@ -30,4 +31,10 @@ archetypeMetadata {
 
 archetype {
     id.set(archetypeId)
+}
+
+readmeGenerate {
+    properties.put("VERSION", P.VERSION)
+    properties.put("GROUP", P.GROUP)
+    properties.put("ARTIFACT", project.name)
 }

@@ -17,7 +17,7 @@ val createArchetypeMetadataFileTask = tasks.create("createArchetypeMetadataFile"
     
     doFirst {
         val archetypeFileText = archetypeMetadataFileText(
-            ArchetypeMetadata(archetypeMetadata.name.get(), archetypeMetadata.fileSets.getOrElse(emptyList()))
+            ArchetypeMetadata(archetypeMetadata.name.getOrElse(project.name), archetypeMetadata.fileSets.getOrElse(emptyList()))
         )
         if (outputFile.exists()) {
             outputFile.delete()
@@ -51,7 +51,7 @@ val createArchetypeFileTask = tasks.create("createArchetypeFile") {
             }
         }
     
-        val archetypeFileText = archetypeFileText(Archetype(archetype.id.get(), sources = sources, testSources = emptyList()))
+        val archetypeFileText = archetypeFileText(Archetype(archetype.id.getOrElse(project.name), sources = sources, testSources = emptyList()))
         
         outputFile.appendText(archetypeFileText)
     }

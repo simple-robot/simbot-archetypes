@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `java-library`
-    `simbot-archetypes-archetype-maven-publish`
+    `simbot-archetypes-archetype-maven-kotlin-publish`
     `simbot-archetypes-readme-generate`
 }
 

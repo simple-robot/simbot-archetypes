@@ -7,7 +7,6 @@ import love.forte.simbot.application.Applications;
 import love.forte.simbot.application.BotRegistrar;
 import love.forte.simbot.application.EventProviders;
 import love.forte.simbot.bot.BotVerifyInfo;
-import love.forte.simbot.bot.BotVerifyInfoDecoderFactory;
 import love.forte.simbot.bot.BotVerifyInfos;
 import love.forte.simbot.bot.JsonBotVerifyInfoDecoder;
 import love.forte.simbot.core.application.Simple;
@@ -34,15 +33,11 @@ public class Main {
         如果你希望能够整合 spring boot，请参考与 java-spring-boot 相关的 archetype 而不是当前的。
      */
 
-    public static void main(String[] args) {
-        final BotVerifyInfo botVerifyInfo = BotVerifyInfos.toBotVerifyInfo(Path.of("my-bot.bot"), (BotVerifyInfoDecoderFactory) JsonBotVerifyInfoDecoder.Factory);
-        System.out.println(botVerifyInfo);
-    }
 
     /**
      * The main.
      */
-    public static void main1(String[] args) {
+    public static void main(String[] args) {
         Applications.simbotApplication(
                 // 使用 Simple Application，也就是最基础的Application。
                 Simple.INSTANCE,

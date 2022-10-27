@@ -67,8 +67,8 @@ public class Main {
      */
     private static void buildApp(SimpleApplicationBuilder builder, SimpleApplicationConfiguration configuration) {
         // 启用指定组件
-        // builder.install(MiraiComponent.Facroty, (config, completionPerceivable) -> Unit.INSTANCE);
-        // builder.install(MiraiBotManager.Facroty, (config, completionPerceivable) -> Unit.INSTANCE);
+        // builder.install(MiraiComponent.Factory, (config, completionPerceivable) -> Unit.INSTANCE);
+        // builder.install(MiraiBotManager.Factory, (config, completionPerceivable) -> Unit.INSTANCE);
 
         // 或者尝试加载当前环境中所有支持的组件（以及botManager）
         // 加载所有组件信息

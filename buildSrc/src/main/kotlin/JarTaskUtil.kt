@@ -35,25 +35,31 @@ fun Jar.configMavenArchetypeSourceJar(
     
     val metaInfMaven = "META-INF/maven"
     
-    from(main.kotlin) {
-        into(kotlinSourceDir)
+    main.kotlinOrNull?.let { kt ->
+        from(kt) {
+            into(kotlinSourceDir)
+        }
     }
+    
     from(main.java) {
         into(javaSourceDir)
     }
     from(main.resources) {
         into(resourcesDir)
     }
-    from(test.kotlin) {
-        into(kotlinTestSourceDir)
+    
+    test.kotlinOrNull?.let { kt ->
+        from(kt) {
+            into(kotlinTestSourceDir)
+        }
     }
+    
     from(test.java) {
         into(javaTestSourceDir)
     }
     from(test.resources) {
         into(testResourcesDir)
     }
-    from(main.resources)
     
     val deleteMark = deleteMark(false)
     

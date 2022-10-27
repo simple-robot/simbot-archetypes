@@ -1,13 +1,13 @@
 plugins {
     `java-library`
-    `simbot-archetypes-archetype-maven-publish`
+    `simbot-archetypes-archetype-maven-java-publish`
     `simbot-archetypes-readme-generate`
 }
 
 
 dependencies {
-    testApi(kotlin("test"))
-    api("love.forte.simbot:simbot-core:3.0.0-beta.2")
+    api("love.forte.simbot:simbot-core:3.0.0-beta.3")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     //api("love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-beta-M3")
 }
 
@@ -16,11 +16,14 @@ tasks.test {
 }
 
 val archetypeId = project.name
+repositories {
+    mavenCentral()
+}
 
 archetypeMetadata {
     name.set(archetypeId)
-    fileSets.add(FileSet(directory = "src/main/kotlin"))
-    fileSets.add(FileSet(directory = "src/test/kotlin"))
+    fileSets.add(FileSet(directory = "src/main/java"))
+    fileSets.add(FileSet(directory = "src/test/java"))
 }
 
 archetype {

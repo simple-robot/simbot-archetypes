@@ -4,6 +4,9 @@ plugins {
     `simbot-archetypes-readme-generate`
 }
 
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     api("love.forte.simbot:simbot-core:${P.SIMBOT_VERSION}")
@@ -16,9 +19,7 @@ tasks.test {
 }
 
 val archetypeId = project.name
-repositories {
-    mavenCentral()
-}
+
 
 archetypeMetadata {
     name.set(archetypeId)

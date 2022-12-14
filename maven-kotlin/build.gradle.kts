@@ -6,6 +6,9 @@ plugins {
     `simbot-archetypes-readme-generate`
 }
 
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     testApi(kotlin("test"))

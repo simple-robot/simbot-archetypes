@@ -1,6 +1,6 @@
-# Maven Kotlin
+# Maven Java
 
-构建Maven环境下Kotlin项目的archetype。
+构建Maven环境下Java项目的archetype。
 
 ## 使用
 

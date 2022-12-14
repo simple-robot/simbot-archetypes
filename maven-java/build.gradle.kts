@@ -6,7 +6,7 @@ plugins {
 
 
 dependencies {
-    api("love.forte.simbot:simbot-core:3.0.0-beta.3")
+    api("love.forte.simbot:simbot-core:${P.SIMBOT_VERSION}")
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     //api("love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-beta-M3")
 }

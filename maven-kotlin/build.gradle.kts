@@ -9,7 +9,7 @@ plugins {
 
 dependencies {
     testApi(kotlin("test"))
-    api("love.forte.simbot:simbot-core:3.0.0-beta.2")
+    api("love.forte.simbot:simbot-core:${P.SIMBOT_VERSION}")
     //api("love.forte.simbot.component:simbot-component-mirai-core:3.0.0.0-beta-M3")
 }
 

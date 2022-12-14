@@ -16,7 +16,7 @@
 mvn archetype:generate                                  \
   -DarchetypeGroupId="love.forte.simbot.archetypes"     \
   -DarchetypeArtifactId="simbot-maven-kotlin-archetype" \
-  -DarchetypeVersion="0.0.3"                            \
+  -DarchetypeVersion="0.0.4"                            \
   -DgroupId=<my.groupid>                                \
   -DartifactId=<my-artifactId>
 ```
@@ -24,9 +24,8 @@ mvn archetype:generate                                  \
 替换上述属性 `<my.groupId>`、`<my-artifactId>` 属性为你新建项目的所需属性，或忽略这几个参数，例如：
 
 ```shell
-mvn archetype:generate -DarchetypeGroupId="love.forte.simbot.archetypes" -DarchetypeArtifactId="simbot-maven-kotlin-archetype" -DarchetypeVersion="0.0.3"
+mvn archetype:generate -DarchetypeGroupId="love.forte.simbot.archetypes" -DarchetypeArtifactId="simbot-maven-kotlin-archetype" -DarchetypeVersion="0.0.4"
 ```
-
 
 
 ### Ⅱ. 使用IntelliJ IDEA可视化构建
@@ -49,7 +48,7 @@ mvn archetype:generate -DarchetypeGroupId="love.forte.simbot.archetypes" -Darche
 
 - **组 ID**: `love.forte.simbot.archetypes`
 - **工件 ID**: `simbot-maven-kotlin-archetype`
-- **版本**: `0.0.3`
+- **版本**: `0.0.4`
 
 完成后点击 **添加**。
 

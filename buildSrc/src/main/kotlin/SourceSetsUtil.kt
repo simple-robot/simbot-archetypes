@@ -27,3 +27,9 @@ internal val org.gradle.api.tasks.SourceSetContainer.`test`: NamedDomainObjectPr
  */
 val org.gradle.api.tasks.SourceSet.`kotlin`: org.gradle.api.file.SourceDirectorySet get() =
     (this as org.gradle.api.plugins.ExtensionAware).extensions.getByName("kotlin") as org.gradle.api.file.SourceDirectorySet
+
+/**
+ * Retrieves the [kotlin][org.gradle.api.file.SourceDirectorySet] extension.
+ */
+val org.gradle.api.tasks.SourceSet.`kotlinOrNull`: org.gradle.api.file.SourceDirectorySet? get() =
+    (this as org.gradle.api.plugins.ExtensionAware).extensions.findByName("kotlin") as? org.gradle.api.file.SourceDirectorySet

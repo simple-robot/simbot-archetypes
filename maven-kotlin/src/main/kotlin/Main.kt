@@ -2,9 +2,11 @@
 
 import love.forte.simbot.ID
 import love.forte.simbot.application.Application
-import love.forte.simbot.core.application.createSimpleApplication
-import love.forte.simbot.core.application.listeners
-import love.forte.simbot.core.event.EventListenersGenerator
+import love.forte.simbot.application.bots
+import love.forte.simbot.application.createSimbotApplication
+import love.forte.simbot.core.application.Simple
+import love.forte.simbot.core.event.EventListenerRegistrationDescriptionsGenerator
+import love.forte.simbot.core.event.listeners
 import love.forte.simbot.event.FriendMessageEvent
 import love.forte.simbot.installAll
 
@@ -12,42 +14,44 @@ import love.forte.simbot.installAll
  * 当前程序入口
  */
 suspend fun main() {
-    val application = createSimpleApplication {
-        listeners {
-            // 注册一个事件监听
-            friendHello()
-        }
-        
+    // 也可以使用 createSimpleApplication { ... }
+    val application = createSimbotApplication(Simple) {
         // 尝试加载当前环境中所有支持的组件等信息。
         // 你也可以通过 install(...) 或者 useXxx { ... } 来定制化环境。
         installAll()
-        
-        
-        bots {
-            // 注册你的bot信息..
-            /*
-            
-             // 例如注册一个mirai bot:
-             mirai {
-                 register(123456L, "PASSWORD") {
-                     // ...
-                 }
-             }
-             // 注意！
-             // 如果你需要使用mirai组件，那么你需要自行添加依赖：
-             // groupId:    love.forte.simbot.component
-             // artifactId: simbot-component-mirai-core
-             // version:    3.0.0.0-beta-M3
-             // 对于其他组件来讲也是大同小异的。
-             
-             */
-        }
-        
     }
-    
+
+
+    // 注册监听函数
+    application.eventListenerManager.listeners {
+        // 注册一个事件监听
+        friendHello()
+    }
+
+    // 注册bot
+    application.bots {
+        // 注册你的bot信息..
+        /*
+
+         // 例如注册一个mirai bot:
+         mirai {
+             register(123456L, "PASSWORD") {
+                 // ...
+             }
+         }
+         // 注意！
+         // 如果你需要使用mirai组件，那么你需要自行添加依赖 (参考 https://github.com/simple-robot/simbot-component-mirai)
+         // groupId:    love.forte.simbot.component
+         // artifactId: simbot-component-mirai-core
+         // version:    参考仓库内于当前核心相匹配的版本
+         // 对于其他组件来讲也是大同小异的。
+
+         */
+    }
+
     // 输出信息
     application.showAllBotsAndContacts()
-    
+
     // 挂起application直到被关闭
     application.join()
 }
@@ -56,19 +60,19 @@ suspend fun main() {
 /**
  * 收到好友的‘你好’，回复一句‘你也好’
  */
-private fun EventListenersGenerator.friendHello() {
+private fun EventListenerRegistrationDescriptionsGenerator.friendHello() {
     // 监听事件类型 'FriendMessageEvent' (好友消息事件)
     FriendMessageEvent { event ->
         // 回复‘你也好’
         event.reply("你也好")
-        
+
         // 你也可以使用 'friend().send(...)' 来实现比较“干净”的回复行为
         // event.friend().send("你也好")
     } onMatch {
         // 条件: 好友的消息是‘你好’
         textContent?.trim() == "你好"
     }
-    
+
     // 你也可以使用下述风格的代码注册监听事件
     /*
     listen(FriendMessageEvent) {
@@ -78,9 +82,9 @@ private fun EventListenersGenerator.friendHello() {
         }
     }
     */
-    
-    
-    
+
+
+
 }
 
 /**
@@ -98,13 +102,13 @@ private suspend fun Application.showAllBotsAndContacts() {
                 contact.send("哼哼")
             }
         }
-    
+
         // Contact 并不一定代表 Friend（好友），如果希望得到Friend信息：
         /*
         if (bot is FriendsContainer) {
             bot.friends // ...
         }
         */
-        
+
     }
 }

@@ -1,6 +1,8 @@
-# Maven Kotlin
+# Maven Java Spring Boot
 
-构建Maven环境下Kotlin项目的archetype。
+构建Maven环境下基于Java的Spring Boot项目的archetype。
+
+> 为了方便作为示例，依赖默认添加了 `spring-boot-starter-web`。
 
 ## 使用
 
@@ -15,8 +17,8 @@
 ```shell
 mvn archetype:generate                                  \
   -DarchetypeGroupId="love.forte.simbot.archetypes"     \
-  -DarchetypeArtifactId="simbot-maven-kotlin-archetype" \
-  -DarchetypeVersion="0.0.3"                            \
+  -DarchetypeArtifactId="simbot-maven-java-spring-boot-archetype" \
+  -DarchetypeVersion="0.0.5"                            \
   -DgroupId=<my.groupid>                                \
   -DartifactId=<my-artifactId>
 ```
@@ -24,9 +26,8 @@ mvn archetype:generate                                  \
 替换上述属性 `<my.groupId>`、`<my-artifactId>` 属性为你新建项目的所需属性，或忽略这几个参数，例如：
 
 ```shell
-mvn archetype:generate -DarchetypeGroupId="love.forte.simbot.archetypes" -DarchetypeArtifactId="simbot-maven-kotlin-archetype" -DarchetypeVersion="0.0.3"
+mvn archetype:generate -DarchetypeGroupId="love.forte.simbot.archetypes" -DarchetypeArtifactId="simbot-maven-java-spring-boot-archetype" -DarchetypeVersion="0.0.5"
 ```
-
 
 
 ### Ⅱ. 使用IntelliJ IDEA可视化构建
@@ -39,7 +40,7 @@ mvn archetype:generate -DarchetypeGroupId="love.forte.simbot.archetypes" -Darche
 
 **2. 设置Archetype**
 
-目录选择 **Maven中央** ，然后等待列表的更新（大约需要等待3~5s），并在列表中搜索 `love.forte.simbot.archetypes:simbot-maven-kotlin-archetype` 并选择最新版本。
+目录选择 **Maven中央** ，然后等待列表的更新（大约需要等待3~5s），并在列表中搜索 `love.forte.simbot.archetypes:simbot-maven-java-spring-boot-archetype` 并选择最新版本。
 
 如果无法搜索或无匹配结果，点击 **`Archetype`** 后的 **添加...** 来添加一个 Archetype 信息：
 
@@ -48,8 +49,8 @@ mvn archetype:generate -DarchetypeGroupId="love.forte.simbot.archetypes" -Darche
 其中：
 
 - **组 ID**: `love.forte.simbot.archetypes`
-- **工件 ID**: `simbot-maven-kotlin-archetype`
-- **版本**: `0.0.3`
+- **工件 ID**: `simbot-maven-java-spring-boot-archetype`
+- **版本**: `0.0.5`
 
 完成后点击 **添加**。
 

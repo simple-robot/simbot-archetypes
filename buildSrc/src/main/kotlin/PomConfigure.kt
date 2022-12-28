@@ -24,12 +24,16 @@ class PomXmlBuilder internal constructor(
     }
     val dependencies = rootElement.firstElement { tagName == "dependencies" } ?: appendElementToRoot { element("dependencies") }
     fun appendDependencyElement(
-        groupId: String, artifactId: String, version: String, scope: String, configure: Element.() -> Unit = {}
+        groupId: String, artifactId: String, version: String?, scope: String?, configure: Element.() -> Unit = {}
     ) = element("dependency") {
         append("groupId") { textContent = groupId }
         append("artifactId") { textContent = artifactId }
-        append("version") { textContent = version }
-        append("scope") { textContent = scope }
+        if (version != null) {
+            append("version") { textContent = version }
+        }
+        if (scope != null) {
+            append("scope") { textContent = scope }
+        }
     }.also(configure).also(dependencies::appendChild)
     
     val build = appendElementToRoot { element("build") }

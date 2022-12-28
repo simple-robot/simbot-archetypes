@@ -1,0 +1,11 @@
+simbot:
+  # 是否在bot注册完成后自动启动他们。
+  # 默认为 true
+  auto-start-bots: true
+
+  # 自定义配置bot资源文件的扫描路径。
+  # 默认为 'classpath:simbot-bots/*.bot*'
+  bot-configuration-resources:
+    - 'classpath:simbot-bots/*.bot*'
+
+# 其他配置...

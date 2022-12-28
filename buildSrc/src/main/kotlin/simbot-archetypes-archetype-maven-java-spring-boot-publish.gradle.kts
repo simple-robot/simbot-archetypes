@@ -82,37 +82,17 @@ publishing {
                     this["maven.compiler.source"] = "17"
                     this["maven.compiler.target"] = "17"
                     this["java.version"] = "17"
-                    
                 }
                 
                 inXml("") {
                     appendDependencyElement(
-                        "org.junit.jupiter",
-                        "junit-jupiter-engine",
-                        "5.9.0",
+                        "org.springframework.boot",
+                        "spring-boot-starter-test",
+                        null,
                         "test"
                     )
                     
-                    build.append("sourceDirectory") { textContent = "src/main/java" }
-                    build.append("testSourceDirectory") { textContent = "src/test/java" }
-                    build.append("resources") {
-                        append("resource") {
-                            append("directory"){ textContent = "src/main/resources" }
-                        }
-                    }
-                    build.append("testResources") {
-                        append("testResource") {
-                            append("directory"){ textContent = "src/test/resources" }
-                        }
-                    }
-                    appendPluginElement(null, "maven-surefire-plugin", "2.22.2")
-                    appendPluginElement(null, "maven-failsafe-plugin", "2.22.2")
-                    appendPluginElement("org.codehaus.mojo", "exec-maven-plugin", "1.6.0") {
-                        append("configuration") {
-                            appendChild(document.createComment("你的main函数所在类"))
-                            append("mainClass") { textContent = "\${groupId}.Main" }
-                        }
-                    }
+                    appendPluginElement("org.springframework.boot", "spring-boot-maven-plugin", null)
                 }
             }
         }

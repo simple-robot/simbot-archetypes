@@ -52,12 +52,12 @@ val sonatypeUsername: String? = systemProp("OSSRH_USER")
 val sonatypePassword: String? = systemProp("OSSRH_PASSWORD")
 
 if (sonatypeUsername == null || sonatypePassword == null) {
-    println("[WARN] - sonatype.username or sonatype.password is null, cannot config nexus publishing.")
+    logger.info("[WARN] - sonatype.username or sonatype.password is null, cannot config nexus publishing.")
 }
 
 nexusPublishing {
-    println("[NEXUS] - project.group:   ${project.group}")
-    println("[NEXUS] - project.version: ${project.version}")
+    logger.info("[NEXUS] - project.group:   {}", project.group)
+    logger.info("[NEXUS] - project.version: {}", project.version)
     packageGroup.set(project.group.toString())
     repositoryDescription.set(project.description)
     

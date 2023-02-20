@@ -84,9 +84,9 @@ publishing {
                 properties.apply {
                     this["project.build.sourceEncoding"] = "UTF-8"
                     this["kotlin.code.style"] = "official"
-                    this["kotlin.compiler.jvmTarget"] = "11"
-                    this["maven.compiler.source"] = "11"
-                    this["maven.compiler.target"] = "11"
+                    this["kotlin.compiler.jvmTarget"] = "17"
+                    this["maven.compiler.source"] = "17"
+                    this["maven.compiler.target"] = "17"
                 }
                 
                 inXml(project.kotlin.coreLibrariesVersion) {
